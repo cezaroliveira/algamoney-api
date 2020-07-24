@@ -2,12 +2,14 @@ package com.example.algamoney.api.resource;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +45,11 @@ public class CategoriaResource {
 
 		// Cria uma resposta com o código 201 e retorna o JSON do objeto que foi salvo no banco
 		return ResponseEntity.created(uri).body(categoriaSalva);
+	}
+
+	@GetMapping(path = "/{codigo}")
+	public Optional<Categoria> buscarPeloCodigo(@PathVariable Long codigo) {
+		return categoriaRepository.findById(codigo);
 	}
 
 }
