@@ -17,7 +17,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -35,7 +34,7 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
 
 		String mensagemUsuario = messageSource.getMessage(MessageConsts.MENSAGEM_INVALIDA, null, LocaleContextHolder.getLocale());
 
-		String mensagemDesenvolvedor = ex.getCause().toString();
+		String mensagemDesenvolvedor = ex.getMostSpecificCause().toString();
 
 		return handleExceptionInternal(ex, Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor)), headers, status, request);
 	}
@@ -48,9 +47,15 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler({EmptyResultDataAccessException.class})
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
-	protected void handleEmptyResultDataAccessException() {
+	//	@ResponseStatus(code = HttpStatus.NOT_FOUND)
+	protected ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
 
+		String mensagemUsuario = messageSource.getMessage(MessageConsts.RECURSO_NAO_ENCONTRADO, null, LocaleContextHolder.getLocale());
+
+		String mensagemDesenvolvedor = ex.getMostSpecificCause().toString();
+
+		return handleExceptionInternal(ex, Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor)),
+				new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
 	private List<Erro> listErros(BindingResult bindingResult) {
