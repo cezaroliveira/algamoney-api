@@ -77,4 +77,12 @@ public class PessoaResource {
 		return ResponseEntity.ok(pessoaNaBase);
 	}
 
+	@PutMapping(path = "/{codigo}/ativo")
+	public ResponseEntity<Pessoa> atualizarAtivo(@PathVariable Long codigo, @Valid @RequestBody Boolean ativo) {
+
+		Pessoa pessoaNaBase = pessoaService.atualizarAtivo(codigo, ativo);
+
+		return ResponseEntity.ok(pessoaNaBase);
+	}
+
 }

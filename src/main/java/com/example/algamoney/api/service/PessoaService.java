@@ -18,15 +18,31 @@ public class PessoaService {
 
 	public Pessoa atualizar(Long codigo, Pessoa pessoa) {
 
+		Optional<Pessoa> pessoaNaBase = obter(codigo);
+
+		BeanUtils.copyProperties(pessoa, pessoaNaBase.get(), "codigo");
+
+		return pessoaRepository.save(pessoaNaBase.get());
+	}
+
+	public Pessoa atualizarAtivo(Long codigo, Boolean ativo) {
+
+		Optional<Pessoa> pessoaNaBase = obter(codigo);
+
+		pessoaNaBase.get().setAtivo(ativo);
+
+		return pessoaRepository.save(pessoaNaBase.get());
+	}
+
+	private Optional<Pessoa> obter(Long codigo) {
+
 		Optional<Pessoa> pessoaNaBase = pessoaRepository.findById(codigo);
 
 		if (!pessoaNaBase.isPresent()) {
 			throw new EmptyResultDataAccessException(/* "Pessoa não existe!", */1);
 		}
 
-		BeanUtils.copyProperties(pessoa, pessoaNaBase.get(), "codigo");
-
-		return pessoaRepository.save(pessoaNaBase.get());
+		return pessoaNaBase;
 	}
 
 }
