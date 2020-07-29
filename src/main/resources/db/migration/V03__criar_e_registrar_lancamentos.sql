@@ -13,14 +13,14 @@ CREATE TABLE lancamento (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, codigo_categoria, codigo_pessoa) 
-				VALUES ('Parque', '2020-07-28', '2020-07-28', 350.00, 'Consolidado do mês', 'A', 1, 1);
+				VALUES ('Parque', '2020-07-28', '2020-07-28', 350.00, 'Consolidado do mês', 'DESPESA', 1, 1);
 
 INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, codigo_categoria, codigo_pessoa) 
-				VALUES ('Restaurante', '2020-05-20', '2020-05-15', 498.17, 'Consolidado do mês', 'B', 2, 2);
+				VALUES ('Restaurante', '2020-05-20', '2020-05-15', 498.17, 'Consolidado do mês', 'DESPESA', 2, 2);
 
 INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, codigo_categoria, codigo_pessoa) 
-				VALUES ('Compra do mês', '2020-07-10', '2020-07-05', 194.00, 'Consolidado do mês', 'C', 3, 3);
+				VALUES ('Compra do mês', '2020-07-10', '2020-07-05', 194.00, 'Consolidado do mês', 'DESPESA', 3, 3);
 
 INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, codigo_categoria, codigo_pessoa) 
-				VALUES ('Remédios', '2020-04-01', '2020-04-02', 100.00, 'Consolidado do mês', 'D', 4, 4);
+				VALUES ('Remédios', '2020-04-01', '2020-04-02', 100.00, 'Consolidado do mês', 'DESPESA', 4, 4);
 
