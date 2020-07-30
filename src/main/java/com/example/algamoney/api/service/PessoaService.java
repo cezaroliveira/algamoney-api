@@ -1,7 +1,5 @@
 package com.example.algamoney.api.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.example.algamoney.api.model.Pessoa;
@@ -12,11 +10,11 @@ public class PessoaService extends AbstractService<Pessoa, PessoaRepository> {
 
 	public Pessoa atualizarAtivo(Long codigo, Boolean ativo) {
 
-		Optional<Pessoa> pessoaNaBase = obter(codigo);
+		Pessoa pessoaNaBase = obter(codigo);
 
-		pessoaNaBase.get().setAtivo(ativo);
+		pessoaNaBase.setAtivo(ativo);
 
-		return entityRepository.save(pessoaNaBase.get());
+		return entityRepository.save(pessoaNaBase);
 	}
 
 }

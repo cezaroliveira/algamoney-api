@@ -12,16 +12,21 @@ public abstract class AbstractService<EntityType, EntityRepository extends JpaRe
 	@Autowired
 	protected EntityRepository entityRepository;
 
-	public EntityType atualizar(Long codigo, EntityType entity) {
+	public EntityType criar(EntityType entity) {
 
-		Optional<EntityType> entityNaBase = obter(codigo);
-
-		BeanUtils.copyProperties(entity, entityNaBase.get(), "codigo");
-
-		return entityRepository.save(entityNaBase.get());
+		return entityRepository.save(entity);
 	}
 
-	protected Optional<EntityType> obter(Long codigo) {
+	public EntityType atualizar(Long codigo, EntityType entity) {
+
+		EntityType entityNaBase = obter(codigo);
+
+		BeanUtils.copyProperties(entity, entityNaBase, "codigo");
+
+		return entityRepository.save(entityNaBase);
+	}
+
+	public EntityType obter(Long codigo) {
 
 		Optional<EntityType> entityNaBase = entityRepository.findById(codigo);
 
@@ -29,7 +34,7 @@ public abstract class AbstractService<EntityType, EntityRepository extends JpaRe
 			throw new EmptyResultDataAccessException(1);
 		}
 
-		return entityNaBase;
+		return entityNaBase.get();
 	}
 
 }

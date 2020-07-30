@@ -40,7 +40,7 @@ public abstract class AbstractResource<EntityType, EntityRepository extends JpaR
 	@PostMapping
 	public ResponseEntity<EntityType> criar(@Valid @RequestBody EntityType entity, HttpServletResponse response) {
 
-		EntityType entityNaBase = entityRepository.save(entity);
+		EntityType entityNaBase = entityService.criar(entity);
 
 		// Publica o evento responsável por gerar no header a localização para o objeto que foi salvo
 		// TODO: Verificar como manter esse código genérico
