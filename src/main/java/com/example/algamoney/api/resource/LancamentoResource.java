@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
@@ -14,6 +15,7 @@ import com.example.algamoney.api.exceptionhandler.Erro;
 import com.example.algamoney.api.exceptionhandler.ExceptionUtils;
 import com.example.algamoney.api.model.Lancamento;
 import com.example.algamoney.api.repository.LancamentoRepository;
+import com.example.algamoney.api.repository.filter.LancamentoFilter;
 import com.example.algamoney.api.service.LancamentoService;
 import com.example.algamoney.api.service.exception.CategoriaInexistenteException;
 import com.example.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
@@ -21,6 +23,18 @@ import com.example.algamoney.api.service.exception.PessoaInexistenteOuInativaExc
 @RestController
 @RequestMapping(path = "/lancamentos")
 public class LancamentoResource extends AbstractResource<Lancamento, LancamentoRepository, LancamentoService> {
+
+	@GetMapping(path = "/listarDesativado")
+	@Override
+	public List<Lancamento> listar() {
+		// TODO Auto-generated method stub
+		return super.listar();
+	}
+
+	@GetMapping
+	public List<Lancamento> listar(LancamentoFilter lancamentoFilter) {
+		return entityRepository.filtrar(lancamentoFilter);
+	}
 
 	@Autowired
 	private ExceptionUtils exceptionUtils;

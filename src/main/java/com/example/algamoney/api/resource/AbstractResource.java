@@ -21,6 +21,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.example.algamoney.api.service.AbstractService;
 
+/**
+ * Caso seja necessário sobrescrever algum dos mapeamentos de URL existentes com
+ * um método diferente (nome, parâmetros, retorno, etc), basta sobrescrevê-lo e
+ * mapear uma outra URL, para evitar conflito.
+ * 
+ * @author 55319
+ *
+ * @param <EntityType>       Entidade do recurso
+ * @param <EntityRepository> Repositório da entidade
+ * @param <EntityService>    Serviço da entidade
+ */
 public abstract class AbstractResource<EntityType, EntityRepository extends JpaRepository<EntityType, Long>, EntityService extends AbstractService<EntityType, EntityRepository>> {
 
 	@Autowired
