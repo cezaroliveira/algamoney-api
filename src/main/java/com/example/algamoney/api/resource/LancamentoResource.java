@@ -3,6 +3,8 @@ package com.example.algamoney.api.resource;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,9 @@ import com.example.algamoney.api.service.exception.PessoaInexistenteOuInativaExc
 @RequestMapping(path = "/lancamentos")
 public class LancamentoResource extends AbstractResource<Lancamento, LancamentoRepository, LancamentoService> {
 
+	@Autowired
+	private ExceptionUtils exceptionUtils;
+
 	@GetMapping(path = "/listarDesativado")
 	@Override
 	public List<Lancamento> listar() {
@@ -32,12 +37,9 @@ public class LancamentoResource extends AbstractResource<Lancamento, LancamentoR
 	}
 
 	@GetMapping
-	public List<Lancamento> listar(LancamentoFilter lancamentoFilter) {
-		return entityRepository.filtrar(lancamentoFilter);
+	public Page<Lancamento> listar(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return entityRepository.filtrar(lancamentoFilter, pageable);
 	}
-
-	@Autowired
-	private ExceptionUtils exceptionUtils;
 
 	@ExceptionHandler({PessoaInexistenteOuInativaException.class})
 	protected ResponseEntity<List<Erro>> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex, WebRequest request) {

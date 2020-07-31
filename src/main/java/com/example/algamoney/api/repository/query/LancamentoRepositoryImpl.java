@@ -12,6 +12,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import com.example.algamoney.api.model.Lancamento;
 import com.example.algamoney.api.model.Lancamento_;
@@ -23,7 +26,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 	private EntityManager entityManager;
 
 	@Override
-	public List<Lancamento> filtrar(LancamentoFilter lancamentoFilter) {
+	public Page<Lancamento> filtrar(LancamentoFilter lancamentoFilter, Pageable pageable) {
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Lancamento> criteriaQuery = criteriaBuilder.createQuery(Lancamento.class);		
@@ -34,7 +37,9 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		criteriaQuery.where(predicates);
 
 		TypedQuery<Lancamento> typedQuery = entityManager.createQuery(criteriaQuery);
-		return typedQuery.getResultList();
+		adicionarRestricoesDePaginacao(typedQuery, pageable);
+
+		return new PageImpl<>(typedQuery.getResultList(), pageable, total(lancamentoFilter));
 	}
 
 	private Predicate[] criarRestricoes(LancamentoFilter lancamentoFilter, CriteriaBuilder criteriaBuilder,
@@ -58,6 +63,30 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		}
 
 		return listPredicates.toArray(new Predicate[listPredicates.size()]);
+	}
+
+	private void adicionarRestricoesDePaginacao(TypedQuery<Lancamento> typedQuery, Pageable pageable) {
+
+		int numeroPagina = pageable.getPageNumber();
+		int registrosPorPagina = pageable.getPageSize();
+		int primeiroRegistroDaPagina = numeroPagina * registrosPorPagina;
+
+		typedQuery.setFirstResult(primeiroRegistroDaPagina);
+		typedQuery.setMaxResults(registrosPorPagina);
+	}
+
+	private Long total(LancamentoFilter lancamentoFilter) {
+
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+		Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+
+		Predicate[] predicates = criarRestricoes(lancamentoFilter, criteriaBuilder, root);
+		criteriaQuery.where(predicates);
+
+		criteriaQuery.select(criteriaBuilder.count(root));
+
+		return entityManager.createQuery(criteriaQuery).getSingleResult();
 	}
 
 }
