@@ -1,5 +1,10 @@
 package com.example.algamoney.api.exceptionhandler;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
 public class Erro {
 
 	private String mensagemUsuario;
@@ -8,14 +13,6 @@ public class Erro {
 	public Erro(String mensagemUsuario, String mensagemDesenvolvedor) {
 		this.mensagemUsuario = mensagemUsuario;
 		this.mensagemDesenvolvedor = mensagemDesenvolvedor;
-	}
-
-	public String getMensagemUsuario() {
-		return mensagemUsuario;
-	}
-
-	public String getMensagemDesenvolvedor() {
-		return mensagemDesenvolvedor;
 	}
 
 }

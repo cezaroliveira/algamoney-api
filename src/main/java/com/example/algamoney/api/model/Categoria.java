@@ -10,11 +10,13 @@ import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "categoria")
 @Getter
 @Setter
+@ToString
 public class Categoria {
 
 	@Id
