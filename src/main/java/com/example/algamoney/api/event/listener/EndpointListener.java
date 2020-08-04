@@ -7,7 +7,10 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class EndpointListener implements ApplicationListener<ApplicationEvent> {
 
 	@Autowired
@@ -17,7 +20,7 @@ public class EndpointListener implements ApplicationListener<ApplicationEvent> {
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ContextRefreshedEvent) {
 			requestHandlerMapping.getHandlerMethods()
-			.forEach((key, value) ->  System.out.println(key + " - " + value));
+			.forEach((key, value) ->  log.info("Mapped endpoint {} = {}", key, value));
 		}
 	}
 
