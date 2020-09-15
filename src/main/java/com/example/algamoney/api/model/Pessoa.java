@@ -17,7 +17,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Pessoa {
+public class Pessoa extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

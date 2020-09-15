@@ -24,7 +24,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Lancamento {
+public class Lancamento extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

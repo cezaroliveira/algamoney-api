@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.example.algamoney.api.service.AbstractService;
+import com.example.algamoney.api.model.BaseEntity;
+import com.example.algamoney.api.repository.CopyProperties;
+import com.example.algamoney.api.repository.filter.FilterQuery;
+import com.example.algamoney.api.service.AbstractCrudService;
 
 /**
  * Caso seja necessário sobrescrever algum dos mapeamentos de URL existentes com
@@ -32,7 +38,7 @@ import com.example.algamoney.api.service.AbstractService;
  * @param <EntityRepository> Repositório da entidade
  * @param <EntityService>    Serviço da entidade
  */
-public abstract class AbstractResource<EntityType, EntityRepository extends JpaRepository<EntityType, Long>, EntityService extends AbstractService<EntityType, EntityRepository>> {
+public abstract class AbstractCrudResource<EntityType extends BaseEntity, EntityRepository extends JpaRepository<EntityType, Long> & CopyProperties & FilterQuery<EntityType>, EntityService extends AbstractCrudService<EntityType, EntityRepository>> {
 
 	@Autowired
 	protected EntityRepository entityRepository;
@@ -43,9 +49,29 @@ public abstract class AbstractResource<EntityType, EntityRepository extends JpaR
 	@Autowired
 	protected ApplicationEventPublisher eventPublisher;
 
-	@GetMapping
+	@GetMapping(path = "/listar")
 	public List<EntityType> listar() {
 		return entityRepository.findAll();
+	}
+
+	/**
+	 * Retorna os registros na base aplicando a paginação, ordenação e filtro.
+	 * 
+	 * @param search   representa a busca rápida que pode ser aplicada a vários
+	 *                 campos
+	 * @param filter   contém todos os campos, operadores e valores
+	 * @param pageable
+	 * @return
+	 */
+	@GetMapping
+	public ResponseEntity<Page<EntityType>> filtrar(
+			@RequestParam(value = "$search", required = false) String search,
+			@RequestParam(value = "$filter", required = false) String filter,
+			Pageable pageable) {
+
+		Page<EntityType> pageEntityDTO = entityService.filtrar(search, filter, pageable);
+
+		return /* pageEntityDTO.isEmpty() ? ResponseEntity.noContent().build() : */ResponseEntity.ok(pageEntityDTO);
 	}
 
 	@PostMapping

@@ -1,4 +1,4 @@
-package com.example.algamoney.api.repository.query;
+package com.example.algamoney.api.repository.lancamento;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,9 @@ import org.springframework.data.domain.Pageable;
 
 import com.example.algamoney.api.model.Lancamento;
 import com.example.algamoney.api.model.Lancamento_;
-import com.example.algamoney.api.repository.filter.LancamentoFilter;
+import com.example.algamoney.api.repository.filter.AbstractFilterQuery;
 
-public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
+public class LancamentoRepositoryImpl extends AbstractFilterQuery<Lancamento> implements LancamentoRepositoryQuery {
 
 	@PersistenceContext
 	private EntityManager entityManager;

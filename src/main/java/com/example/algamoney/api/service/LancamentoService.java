@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import com.example.algamoney.api.model.Categoria;
 import com.example.algamoney.api.model.Lancamento;
 import com.example.algamoney.api.model.Pessoa;
-import com.example.algamoney.api.repository.CategoriaRepository;
-import com.example.algamoney.api.repository.LancamentoRepository;
-import com.example.algamoney.api.repository.PessoaRepository;
+import com.example.algamoney.api.repository.categoria.CategoriaRepository;
+import com.example.algamoney.api.repository.lancamento.LancamentoRepository;
+import com.example.algamoney.api.repository.pessoa.PessoaRepository;
 import com.example.algamoney.api.service.exception.CategoriaInexistenteException;
 import com.example.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
 
 @Service
-public class LancamentoService extends AbstractService<Lancamento, LancamentoRepository> {
+public class LancamentoService extends AbstractCrudService<Lancamento, LancamentoRepository> {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;

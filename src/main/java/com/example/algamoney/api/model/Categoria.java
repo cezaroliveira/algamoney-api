@@ -22,7 +22,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Categoria {
+public class Categoria extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
