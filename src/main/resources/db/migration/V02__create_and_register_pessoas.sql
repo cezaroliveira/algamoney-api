@@ -1,4 +1,4 @@
-CREATE TABLE pessoa (
+CREATE TABLE IF NOT EXISTS pessoa (
 	codigo BIGINT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(50) NOT NULL,
 	logradouro VARCHAR(50) NULL,
@@ -11,8 +11,10 @@ CREATE TABLE pessoa (
 	ativo BOOLEAN NOT NULL DEFAULT TRUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO pessoa (nome, logradouro, numero, complemento, bairro, cep, cidade, estado) VALUES ('Pedro', 'Rua do Pedro', '4', null, 'Nova Esperança', '34789564', 'Belo Horizonte', 'MG');
-INSERT INTO pessoa (nome, logradouro, numero, complemento, bairro, cep, cidade, estado) VALUES ('Flávia', 'Rua da Flávia', '789', 'Bloco 3, Apto 504', 'Terezinha', '32341260', 'São José', 'SP');
+INSERT INTO pessoa (nome, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+	VALUES ('Pedro', 'Rua do Pedro', '4', null, 'Nova Esperança', '34789564', 'Belo Horizonte', 'MG');
+INSERT INTO pessoa (nome, logradouro, numero, complemento, bairro, cep, cidade, estado) 
+	VALUES ('Flávia', 'Rua da Flávia', '789', 'Bloco 3, Apto 504', 'Terezinha', '32341260', 'São José', 'SP');
 INSERT INTO pessoa (nome) VALUES ('José');
 INSERT INTO pessoa (nome) VALUES ('João');
 INSERT INTO pessoa (nome) VALUES ('Maria');
