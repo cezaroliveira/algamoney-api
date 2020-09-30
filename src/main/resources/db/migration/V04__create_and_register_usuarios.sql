@@ -9,7 +9,7 @@ INSERT INTO usuario (nome, email, senha)
 		   	 VALUES ('Administrador', 'admin@algamoney.com', '$2a$10$PTkE8TCM1RktIY33yjrjzuyI/pi3yIS1y/AomQq0uUYsI604b4iEq');
 
 INSERT INTO usuario (nome, email, senha) 
-			 VALUES ('Maria da Silva', 'maria@algamoney.com', '$2a$10$bqxsMeLf90trTcZ5VPqgfep15oPbVdKXOeMWh5jtV7wMRQ1cL7qqG');
+			 VALUES ('Maria da Silva', 'maria@algamoney.com', '$2a$10$Iz4coF6YRVeI.1RyvaLlXudraaE6QAAiUDHjH965j0m1OzNBXT1hC');
 
 CREATE TABLE IF NOT EXISTS permissao (
 	codigo BIGINT PRIMARY KEY AUTO_INCREMENT,
