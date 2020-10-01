@@ -20,6 +20,9 @@ INSERT INTO permissao (descricao)
 			   VALUES ('ROLE_CADASTRAR_CATEGORIA');
 
 INSERT INTO permissao (descricao) 
+			   VALUES ('ROLE_ATUALIZAR_CATEGORIA');
+
+INSERT INTO permissao (descricao) 
 			   VALUES ('ROLE_REMOVER_CATEGORIA');
 
 INSERT INTO permissao (descricao) 
@@ -27,6 +30,9 @@ INSERT INTO permissao (descricao)
 
 INSERT INTO permissao (descricao) 
 			   VALUES ('ROLE_CADASTRAR_PESSOA');
+
+INSERT INTO permissao (descricao) 
+			   VALUES ('ROLE_ATUALIZAR_PESSOA');
 
 INSERT INTO permissao (descricao) 
 			   VALUES ('ROLE_REMOVER_PESSOA');
@@ -38,10 +44,25 @@ INSERT INTO permissao (descricao)
 			   VALUES ('ROLE_CADASTRAR_LANCAMENTO');
 
 INSERT INTO permissao (descricao) 
+			   VALUES ('ROLE_ATUALIZAR_LANCAMENTO');
+
+INSERT INTO permissao (descricao) 
 			   VALUES ('ROLE_REMOVER_LANCAMENTO');
 
 INSERT INTO permissao (descricao) 
 			   VALUES ('ROLE_PESQUISAR_LANCAMENTO');
+
+INSERT INTO permissao (descricao) 
+			   VALUES ('ROLE_CADASTRAR_USUARIO');
+
+INSERT INTO permissao (descricao) 
+			   VALUES ('ROLE_ATUALIZAR_USUARIO');
+
+INSERT INTO permissao (descricao) 
+			   VALUES ('ROLE_REMOVER_USUARIO');
+
+INSERT INTO permissao (descricao) 
+			   VALUES ('ROLE_PESQUISAR_USUARIO');
 
 CREATE TABLE IF NOT EXISTS usuario_permissao (
 	codigo_usuario BIGINT NOT NULL,
@@ -58,4 +79,5 @@ SELECT 1, codigo FROM permissao;
 -- Maria tem apenas as permissoes de pesquisa
 INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) 
 SELECT 2, codigo FROM permissao
-WHERE descricao like '%PESQUISAR%';
+WHERE descricao LIKE '%PESQUISAR%'
+AND descricao NOT LIKE '%USUARIO%';
