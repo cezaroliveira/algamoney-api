@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.example.algamoney.api.event.RecursoCriadoEvent;
 import com.example.algamoney.api.model.BaseEntity;
 import com.example.algamoney.api.repository.CopyProperties;
 import com.example.algamoney.api.repository.filter.FilterQuery;
@@ -94,7 +95,7 @@ public abstract class AbstractCrudResource<EntityType extends BaseEntity, Entity
 
 		// Publica o evento responsável por gerar no header a localização para o objeto que foi salvo
 		// TODO: Verificar como manter esse código genérico
-		//		eventPublisher.publishEvent(new RecursoCriadoEvent(this, response, entityNaBase.getCodigo()));
+		eventPublisher.publishEvent(new RecursoCriadoEvent(this, response, entityNaBase.getCodigo()));
 
 		// Cria uma resposta com o código 201 e retorna o JSON do objeto que foi salvo no banco
 		return new ResponseEntity<EntityType>(entityNaBase, HttpStatus.CREATED);
