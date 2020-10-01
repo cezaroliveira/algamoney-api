@@ -37,7 +37,6 @@ public class Categoria extends BaseEntity {
 	private String nome;
 
 	@JsonIgnoreProperties(value = "categoria")
-	@NotNull
 	@OneToMany(mappedBy = "categoria")
 	private List<Lancamento> lancamento;
 
