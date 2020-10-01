@@ -21,7 +21,7 @@ import com.example.algamoney.api.service.CategoriaService;
 public class CategoriaResource extends AbstractCrudResource<Categoria, CategoriaRepository, CategoriaService> {
 
 	@Override
-	@PreAuthorize(value = "hasRole('ROLE_PESQUISAR_CATEGORIA')")
+	@PreAuthorize(value = "hasRole('ROLE_PESQUISAR_CATEGORIA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Page<Categoria>> filtrar(
 			@RequestParam(value = "$search", required = false) String search,
 			@RequestParam(value = "$filter", required = false) String filter,
@@ -30,7 +30,7 @@ public class CategoriaResource extends AbstractCrudResource<Categoria, Categoria
 	}
 
 	@Override
-	@PreAuthorize(value = "hasRole('ROLE_CADASTRAR_CATEGORIA')")
+	@PreAuthorize(value = "hasRole('ROLE_CADASTRAR_CATEGORIA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria entity, HttpServletResponse response) {
 		return super.criar(entity, response);
 	}
