@@ -25,20 +25,33 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.example.algamoney.api.model.BaseEntity;
 import com.example.algamoney.api.repository.CopyProperties;
 import com.example.algamoney.api.repository.filter.FilterQuery;
-import com.example.algamoney.api.service.AbstractCrudService;
+import com.example.algamoney.api.service.CrudService;
 
 /**
  * Caso seja necessário sobrescrever algum dos mapeamentos de URL existentes com
  * um método diferente (nome, parâmetros, retorno, etc), basta sobrescrevê-lo e
  * mapear uma outra URL, para evitar conflito.
  * 
- * @author 55319
- *
+ * Para mapear para URL diferente ou incluir permissões para uma mesma
+ * assinatura, é necessário sobrescrever um método integralmente, incluindo as
+ * anotações dos parâmetros.
+ * 
+ * Já as anotações do método são herdadas desta abstração
+ * (@GetMapping, @PostMapping, etc)
+ * 
+ * Exemplo de inclusão de permissão: <br>
+ * 
+ * @PreAuthorize(value = "hasRole('ROLE_PESQUISAR_CATEGORIA')") public
+ *                     ResponseEntity<Page<EntityType>> filtrar(
+ * @RequestParam(value = "$search", required = false) String search,
+ * @RequestParam(value = "$filter", required = false) String filter, Pageable
+ *                     pageable) {...}
+ * 
  * @param <EntityType>       Entidade do recurso
  * @param <EntityRepository> Repositório da entidade
  * @param <EntityService>    Serviço da entidade
  */
-public abstract class AbstractCrudResource<EntityType extends BaseEntity, EntityRepository extends JpaRepository<EntityType, Long> & CopyProperties & FilterQuery<EntityType>, EntityService extends AbstractCrudService<EntityType, EntityRepository>> {
+public abstract class AbstractCrudResource<EntityType extends BaseEntity, EntityRepository extends JpaRepository<EntityType, Long> & CopyProperties & FilterQuery<EntityType>, EntityService extends CrudService<EntityType, EntityRepository>> {
 
 	@Autowired
 	protected EntityRepository entityRepository;
