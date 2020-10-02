@@ -10,9 +10,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 
 /**
  * Filtro responsável por permitir o CORS.
@@ -21,6 +24,9 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
+	@Autowired
+	private AlgamoneyApiProperty algamoneyApiProperty;
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -28,7 +34,7 @@ public class CorsFilter implements Filter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", algamoneyApiProperty.getSecurity().getCors().getAllowOrigin());
 		httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
 
 		if ("OPTIONS".equals(httpServletRequest.getMethod())) {
