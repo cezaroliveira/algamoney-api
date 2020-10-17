@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  # docker-mysql:
+  #   image: mysql:5.7
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root
+  #     - MYSQL_DATABASE=database
+  #     - MYSQL_USER=root
+  #     - MYSQL_PASSWORD=root
+  #   ports:
+  #     - 3307:3306
+
+  mysql-container:
+    build: 
+      context: src\main\resources\db
+    container_name: mysql-container
+    command:
+      --default-authentication-plugin=mysql_native_password
+    volumes:
+      - type: bind
+        source: .\src\main\resources\db\data
+        target: /var/lib/mysql
+        read_only: false
+    ports: 
+      - 3306:3306
+    networks: 
+      - default
+
+  algamoney-api-container:
+    build: 
+      context: .\
+    container_name: algamoney-api-container
+    ports:
+       - 8080:8080
+    environment:
+      spring.datasource.url: jdbc:mysql://mysql-container:3306/algamoneyapi?createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=UTC
+    networks: 
+      - default
+    depends_on:
+      - mysql-container
+
+networks:
+  # Using an external user-defined network, already created before
+  # "default" => visible internally only, used by internals containers that don't see the external network
+  # "algamoney-network" => visible by others containers created externally to this
+  default:
+    external:
+      name: algamoney-network
+  # Using a default network dynamically created by docker, used by internals containers only
+  # Pattern => dirName_algamoney-network
+  # algamoney-network:
+  #   driver: bridge
