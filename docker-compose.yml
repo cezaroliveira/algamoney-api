@@ -22,6 +22,14 @@ services:
         source: .\src\main\resources\db\data
         target: /var/lib/mysql
         read_only: false
+      # - type: bind
+      #   # Use named volume so mysql data is persisted across restart
+      #   source: mysqldata
+      #   target: /var/lib/mysql/
+      - type: bind
+        # Logs are mounted to a relative path. These are also accessed by Filebeat and consumed by the Mysql module
+        source: .\src\main\resources\db\logs
+        target: /var/log/mysql/
     ports: 
       - 3306:3306
     networks: 
@@ -39,6 +47,11 @@ services:
       - default
     depends_on:
       - mysql-container
+
+volumes:
+  # Mysql data
+  mysqldata:
+    driver: local
 
 networks:
   # Using an external user-defined network, already created before

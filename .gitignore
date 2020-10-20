@@ -4,8 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### Ignore MySQL Database ###
+### Ignore MySQL Data ###
 src/main/resources/db/data
+src/main/resources/db/logs
 
 ### STS ###
 .apt_generated
