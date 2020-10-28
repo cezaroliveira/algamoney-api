@@ -33,6 +33,13 @@ services:
     ports: 
       - 3306:3306
     networks: 
+      - "default"
+
+  adminer-container:
+    image: adminer
+    ports:
+      - 8081:8080
+    networks:
       - default
 
   algamoney-api-container:
