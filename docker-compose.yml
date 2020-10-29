@@ -1,17 +1,7 @@
 version: '3'
 
 services:
-  # docker-mysql:
-  #   image: mysql:5.7
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=root
-  #     - MYSQL_DATABASE=database
-  #     - MYSQL_USER=root
-  #     - MYSQL_PASSWORD=root
-  #   ports:
-  #     - 3307:3306
-
-  mysql-container:
+  mysql:
     build: 
       context: src\main\resources\db
     container_name: mysql-container
@@ -35,14 +25,15 @@ services:
     networks: 
       - "default"
 
-  adminer-container:
+  adminer:
     image: adminer
+    container_name: adminer-container
     ports:
       - 8081:8080
     networks:
       - default
 
-  algamoney-api-container:
+  algamoney-api:
     build: 
       context: .\
     container_name: algamoney-api-container
@@ -53,7 +44,7 @@ services:
     networks: 
       - default
     depends_on:
-      - mysql-container
+      - mysql
 
 volumes:
   # Mysql data
