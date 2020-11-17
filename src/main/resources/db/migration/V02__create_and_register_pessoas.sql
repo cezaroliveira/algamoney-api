@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS pessoa (
 	cidade VARCHAR(30) NULL,
 	estado VARCHAR(2) NULL,
 	ativo BOOLEAN NOT NULL DEFAULT TRUE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 INSERT INTO pessoa (nome, logradouro, numero, complemento, bairro, cep, cidade, estado) 
 	VALUES ('Pedro', 'Rua do Pedro', '4', null, 'Nova Esperança', '34789564', 'Belo Horizonte', 'MG');

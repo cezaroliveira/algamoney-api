@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS usuario (
 	nome VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	senha VARCHAR(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 INSERT INTO usuario (nome, email, senha) 
 		   	 VALUES ('Administrador', 'admin@algamoney.com', '$2a$10$PTkE8TCM1RktIY33yjrjzuyI/pi3yIS1y/AomQq0uUYsI604b4iEq');
@@ -14,7 +14,7 @@ INSERT INTO usuario (nome, email, senha)
 CREATE TABLE IF NOT EXISTS permissao (
 	codigo BIGINT PRIMARY KEY AUTO_INCREMENT,
 	descricao VARCHAR(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 INSERT INTO permissao (descricao) 
 			   VALUES ('ROLE_CADASTRAR_CATEGORIA');
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS usuario_permissao (
 	PRIMARY KEY(codigo_usuario, codigo_permissao),
 	FOREIGN KEY(codigo_usuario) REFERENCES usuario(codigo),
 	FOREIGN KEY(codigo_permissao) REFERENCES permissao(codigo)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- Admin tem todas as permissoes
 INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) 

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS lancamento (
 	codigo_pessoa BIGINT NOT NULL,
 	FOREIGN KEY (codigo_categoria) REFERENCES categoria(codigo),
 	FOREIGN KEY (codigo_pessoa) REFERENCES pessoa(codigo)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, codigo_categoria, codigo_pessoa) 
 				VALUES ('Parque', '2020-07-28', '2020-07-28', 350.00, 'Consolidado do mês', 'DESPESA', 1, 1);
