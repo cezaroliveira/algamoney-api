@@ -3,20 +3,20 @@ version: '3'
 services:
   mysql:
     build: 
-      context: src\main\resources\db
+      context: ./src/main/resources/db
     container_name: mysql-container
     command:
       --default-authentication-plugin=mysql_native_password --general-log=1 --general-log-file=/var/log/mysql/general-log.log --slow_query_log=1 --slow_query_log_file=/var/log/mysql/slow-query-log.log
     volumes:
       - type: bind
         # Use user-defined volume so mysql data is persisted across restart and accessible on host
-        source: .\src\main\resources\db\data
+        source: ./src/main/resources/db/data
         target: /var/lib/mysql
         read_only: false
       - type: bind
         # Logs are mounted to a relative path. These are also accessed by Filebeat and consumed by the Mysql module
-        source: .\src\main\resources\db\logs
-        target: /var/log/mysql/
+        source: ./src/main/resources/db/logs
+        target: /var/log/mysql
     ports: 
       - 3306:3306
     networks: 
@@ -32,7 +32,7 @@ services:
 
   algamoney-api:
     build: 
-      context: .\
+      context: ./
     container_name: algamoney-api-container
     ports:
        - 8080:8080
@@ -42,6 +42,7 @@ services:
       - default
     depends_on:
       - mysql
+    restart: on-failure
 
 networks:
   # Using an external user-defined network, already created before
